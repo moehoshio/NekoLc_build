@@ -43,36 +43,8 @@ OpenSSL::SSL OpenSSL::Crypto
 # libcurl
 CURL::libcurl
 )
+set_target_properties(NekoLc PROPERTIES
 
-
-function(copy_dlls TARGET_NAME DLL_LIST)
-    if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
-        foreach(DLL ${DLL_LIST})
-            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${LIBRARY_DIRS}/bin/${DLL}"
-                $<TARGET_FILE_DIR:${TARGET_NAME}>)
-        endforeach()
-    elseif(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-        foreach(DLL ${DLL_LIST})
-            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${LIBRARY_DIRS}/debug/bin/${DLL}"
-                $<TARGET_FILE_DIR:${TARGET_NAME}>)
-        endforeach()
-    endif()
-endfunction()
-
-
-if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
-        set_target_properties(NekoLc PROPERTIES WIN32_EXECUTABLE TRUE)
-        target_sources(NekoLc PRIVATE res/win/icon.rc)
-        set(DLL_LIST "libcrypto-3-x64.dll" "libssl-3-x64.dll" "zlib1.dll" "libcurl.dll")
-    else()
-        set(DLL_LIST "libcrypto-3-x64.dll" "libssl-3-x64.dll" "zlibd1.dll" "libcurl-d.dll")
-    endif()
-endif() # os win
-
-
-copy_dlls(NekoLc "${DLL_LIST}")
+    MACOSX_BUNDLE TRUE
+    MACOSX_BUNDLE_BUNDLE_NAME "com.moehoshio.NekoLauncher"
+)
