@@ -794,7 +794,7 @@ namespace neko {
 
                 if (net.autoRetry(Opt::onlyRequest, Aargs)) {
                     nlog::Info(FI, LI, "%s : testing okay , host : %s , retCode : %d", FN, it, retCode);
-                    neko::networkBase::Dconfig.host = std::string(it);
+                    // neko::networkBase::Dconfig.host = std::string(it);
                     return;
                 } else {
                     nlog::Warn(FI, LI, "%s : faild to testing host : %s , now try to the next", FN, it);

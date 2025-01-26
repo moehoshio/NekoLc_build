@@ -5,15 +5,15 @@ constexpr const char *launcherMode = "minecraft"; // Option: `minecraft`. Used i
 // Import the logging module for nerr exceptions , in nerr.hpp
 #define nerrImpLoggerModeDefine true
 
-#define NetWorkAuthlibHostDefine "skin.example.org"
+#define NetWorkAuthlibHostDefine "skin.oha.li"
 
 // If true, it means that the definition of NetWorkHostListDefine will be used regardless of the presence of a hostlist file. By default (false), it will attempt to read the hostlist file.
 #define UseNetWorkHostListDefine true
 // e.g {"api.example.com","api.example.org","" ...}
-#define NetWorkHostListDefine {"api.example.com","www.example.org"};
+#define NetWorkHostListDefine {"svc.oha.li"};
 
 // If true, the version number defined by NekoLcCoreVersionDefine will be used; otherwise, attempt the version number in the data/version file will be used.
-#define UseNekoLcCoreVersionDefine false
+#define UseNekoLcCoreVersionDefine true
 //any string
 #define NekoLcCoreVersionDefine "v0.0.1"
 
