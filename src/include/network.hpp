@@ -23,7 +23,7 @@ namespace neko {
         using RetHttpCode = int;
 
         // if not waiting , testing host (set Dconfig.host) may not be ready
-        static std::future<void> init();
+        static void init();
 
         struct Config {
             std::string userAgent;

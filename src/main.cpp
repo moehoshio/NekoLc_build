@@ -13,7 +13,7 @@
 int main(int argc, char *argv[]) {
     try {
         QApplication app(argc, argv);
-        auto it = neko::autoInit(argc, argv);
+        neko::autoInit(argc, argv);
         neko::ClientConfig config(exec::getConfigObj());
         ui::MainWindow w(config);
         w.showLoad({ui::loadMsg::OnlyRaw,
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
                 emit w.setLoadingNowD(msg);
         };
 
-        exec::getThreadObj().enqueue([=, &it, &w] {
+        exec::getThreadObj().enqueue([=, &w] {
 
             // check and auto install , if auto install faild , show hint and retry
             for (size_t i = 0; i < 5; ++i) {
@@ -43,8 +43,7 @@ int main(int argc, char *argv[]) {
                     hintFunc({neko::info::translations(neko::info::lang.title.error), msg, "", (i == 4) ? 2 : 1, ((i == 4) ? quitHint : retryHint)});
                 }
             }
-            // wait for testing host
-            it.get();
+            
             if (neko::autoUpdate(hintFunc, loadFunc, setLoadInfo) == neko::State::over) {
                 emit w.showPageD(ui::MainWindow::pageState::index);
             } else {

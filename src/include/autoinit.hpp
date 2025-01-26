@@ -75,7 +75,7 @@ namespace neko {
         nlog::Info(FI, LI, "%s : config more : temp : %s , resVersion : %s", FN, config.more.temp, config.more.resVersion);
     }
 
-    inline auto autoInit(int argc, char *argv[]) {
+    inline void autoInit(int argc, char *argv[]) {
 
         if (exec::getConfigObj().LoadFile("config.ini") < 0)
             oneIof o("loadBad.txt"); // If there is a callback, the user can be notified
@@ -91,6 +91,6 @@ namespace neko {
 
         configInfoPrint(cfg);
         
-        return networkBase::init();
+        networkBase::init();
     };
 } // namespace neko
