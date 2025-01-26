@@ -1,0 +1,62 @@
+name: Build for Macos
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os}}
+    strategy:
+      matrix:
+        os: [macos-latest]
+        arch: [arm64]
+        
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up CMake
+      uses: lukka/get-cmake@latest
+
+    - name: Install dependencies
+      run: |
+        if [[ ${{ matrix.os }} == 'macos-latest' ]]; then
+          brew install qt curl openssl
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt)" >> $GITHUB_ENV
+          echo "QtBin=$(brew --prefix qt)/libexec" >> $GITHUB_ENV
+          echo "Qt6=$(brew --prefix qt)">> $GITHUB_ENV
+        fi
+    - name: Copy Cmake file
+      run: cp CmakeListsCopy.txt CMakeLists.txt
+      
+    - name: clar build
+      run: rm -rf build
+
+    - name: Configure CMake
+      run: cmake -B./build -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH -DQtBin=$QtBin -DQt6=$Qt6 -DBUILD_SHARED_LIBS=OFF .
+
+    - name: Build
+      run: cmake --build ./build --config Release
+    - name: Cat files
+      run: ls -la ./ && ls -la ./build
+
+    - name: Deploy Qt libraries
+      working-directory: build
+      run: $Qt6/bin/macdeployqt ./NekoLc.app -dmg
+
+    - name: Deploy Qt libraries
+      working-directory: build
+      run: otool -L ./NekoLc.app/Contents/MacOS/NekoLc
+    
+    - name: Clone for lib
+      working-directory: build
+      run: bash ../script/exlib_forotool.sh ./NekoLc.app/Contents/MacOS/NekoLc ./NekoLc.app/libs/
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-artifacts
+        path: build/

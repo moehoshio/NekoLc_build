@@ -1,0 +1,11 @@
+.vs/
+.vscode/
+build/
+
+CmakeLists.txt
+*.log
+*.tmp
+*.bak
+
+*_moc.cpp
+*_copy.*
