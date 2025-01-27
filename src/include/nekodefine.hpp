@@ -10,7 +10,7 @@ constexpr const char *launcherMode = "minecraft"; // Option: `minecraft`. Used i
 // If true, it means that the definition of NetWorkHostListDefine will be used regardless of the presence of a hostlist file. By default (false), it will attempt to read the hostlist file.
 #define UseNetWorkHostListDefine true
 // e.g {"api.example.com","api.example.org","" ...}
-#define NetWorkHostListDefine {"svc.oha.li"};
+#define NetWorkHostListDefine {"svc.oha.li/neko"};
 
 // If true, the version number defined by NekoLcCoreVersionDefine will be used; otherwise, attempt the version number in the data/version file will be used.
 #define UseNekoLcCoreVersionDefine true
