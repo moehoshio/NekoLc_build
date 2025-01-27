@@ -44,7 +44,3 @@ OpenSSL::SSL OpenSSL::Crypto
 # libcurl
 CURL::libcurl
 )
-set_target_properties(NekoLc PROPERTIES
-    MACOSX_BUNDLE TRUE
-    MACOSX_BUNDLE_BUNDLE_NAME "com.moehoshio.NekoLauncher"
-)
